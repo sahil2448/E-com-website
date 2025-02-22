@@ -18,7 +18,8 @@ const ProductList = () => {
   const dispatch = useDispatch();
 
   const handleUpdateQuantity = (id, quantity) => {
-    console.log(tempItems);
+    // console.log(tempItems);
+    // console.log(cartItems);
     dispatch(updateTempQuantity({ id, quantity })); // we are passing two values, so contained in curly brackets
   };
 
@@ -33,7 +34,7 @@ const ProductList = () => {
     if (status === "idle") {
       dispatch(fetchProducts());
     }
-  }, [status]);
+  }, [status, dispatch]);
 
   if (status === "loading") return <p>Loading Products...</p>;
   if (status === "failed")
@@ -55,8 +56,8 @@ const ProductList = () => {
               type="number"
               min={1}
               value={
-                tempItems.find((tempItem) => tempItem.id === product.id)
-                  ?.quantity || product.quantity
+                cartItems.find((item) => item.id === product.id)?.quantity ||
+                product.quantity
               }
               onChange={(e) =>
                 handleUpdateQuantity(product.id, parseInt(e.target.value))

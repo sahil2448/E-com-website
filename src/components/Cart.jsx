@@ -10,11 +10,7 @@ import {
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const {
-    items: cartItems,
-    tempItems,
-    totalPrice,
-  } = useSelector((state) => state.cart);
+  const { items: cartItems, totalPrice } = useSelector((state) => state.cart);
 
   const navigate = useNavigate();
   const handleRemoveItem = (id) => {
