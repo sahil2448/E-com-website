@@ -44,22 +44,8 @@ const Cart = () => {
                 <div className="cart-item-details">
                   <h3>{item.title}</h3>
                   <p>price: ${item.price.toFixed(2)}</p>
+                  <p>Quantity: {item.quantity}</p>
                   <div>
-                    {/* <input
-                      type="number"
-                      min={1}
-                      value={
-                        tempItems.find((tempItem) => tempItem.id === item.id)
-                          ?.quantity || item.quantity
-                      }
-                      onChange={(e) =>
-                        handleUpdateQuantity(item.id, parseInt(e.target.value))
-                      }
-                    />
-
-                    <button onClick={() => handleApplyUpdate(item.id)}>
-                      Update
-                    </button> */}
                     <button onClick={() => handleRemoveItem(item.id)}>
                       Remove
                     </button>

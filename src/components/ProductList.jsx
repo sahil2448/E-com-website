@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "./Navbar";
 import { fetchProducts } from "../features/shopCart/productSlice";
@@ -17,9 +17,9 @@ const ProductList = () => {
   } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  const [quantity, setQuantity] = useState(1);
+
   const handleUpdateQuantity = (id, quantity) => {
-    // console.log(tempItems);
-    // console.log(cartItems);
     dispatch(updateTempQuantity({ id, quantity })); // we are passing two values, so contained in curly brackets
   };
 
@@ -51,23 +51,34 @@ const ProductList = () => {
                 ? `${product.title.slice(0, 20)}...`
                 : product.title}
             </h2>
-            <p>{product.price}</p>
-            <input
-              type="number"
-              min={1}
-              value={
-                cartItems.find((item) => item.id === product.id)?.quantity ||
-                product.quantity
-              }
-              onChange={(e) =>
-                handleUpdateQuantity(product.id, parseInt(e.target.value))
-              }
-            />
+            <p>Price: {product.price}</p>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <input
+                type="number"
+                min={1}
+                style={{ width: "4rem", marginBottom: "1rem" }}
+                value={
+                  cartItems.find((item) => item.id === product.id)?.quantity
+                }
+                onChange={(e) => {
+                  handleUpdateQuantity(product.id, parseInt(e.target.value)),
+                    setQuantity(e.target.value);
+                }}
+              />
+              <p>
+                {cartItems.find((item) => item.id === product.id)?.quantity *
+                  product.price || 1 * product.price}
+              </p>
+            </div>
 
-            {/* <button onClick={() => handleApplyUpdate(product.id)}>
-              Update
-            </button> */}
-            <button onClick={() => dispatch(addToCart(product))}>
+            <button onClick={() => dispatch(addToCart({ product, quantity }))}>
               Add to cart
             </button>
           </div>
